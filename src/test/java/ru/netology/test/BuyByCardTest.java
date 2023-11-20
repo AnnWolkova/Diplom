@@ -25,7 +25,7 @@ public class BuyByCardTest {
         Configuration.browser = "firefox";
         Configuration.browserSize = "1440x900";
 
-        try(InputStream fis = BuyByCardTest.class.getResourceAsStream("/application.properties"))
+        try(InputStream fis = BuyByCardTest.class.getResourceAsStream("/db.properties"))
         {
             Properties properties = new Properties();
             properties.load(fis);
@@ -41,7 +41,7 @@ public class BuyByCardTest {
         open("http://localhost:8080");
     }
 
-    @Test //1
+    @Test
     void shouldBuyByCreditCard() {
         int numRows = getResultSetRowCountForCard();
         val generalPage = new GeneralPage();
@@ -52,7 +52,7 @@ public class BuyByCardTest {
         Assertions.assertEquals(numRows + 1, getResultSetRowCountForCard());
     }
 
-    @Test  //2
+    @Test
     void shouldCanceled() {
         int numRows = getResultSetRowCountForCard();
         val generalPage = new GeneralPage();
@@ -63,14 +63,14 @@ public class BuyByCardTest {
         Assertions.assertEquals(numRows + 1, getResultSetRowCountForCard());
     }
 
-    @Test //3
+    @Test
     void shouldErrorByFieldNumberOfCard() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
         buyByCard.errorByFieldCardNumberBuyByCard();
     }
 
-    @Test  //4
+    @Test
     void shouldErrorByEmptyFieldNumberOfCard() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
@@ -79,14 +79,14 @@ public class BuyByCardTest {
     }
 
 
-    @Test //5
+    @Test
     void shouldErrorByFieldOwner() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
         buyByCard.errorByEmptyFieldOwnerBuyByCard("строчные буквы не заглавные");
     }
 
-    @Test //6
+    @Test
     void shouldCheckByEmptyFieldOwner() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
@@ -94,7 +94,7 @@ public class BuyByCardTest {
         BuyByCreditPage.isAlert("Владелец", "Поле обязательно для заполнения");
     }
 
-    @Test //7
+    @Test
     void shouldErrorByEmptyFieldYear() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
@@ -102,14 +102,14 @@ public class BuyByCardTest {
         assertTrue(BuyByCreditPage.isAlert("Год", "Неверный формат"));
     }
 
-    @Test  //8
+    @Test
     void shouldErrorByIncorrectValueFieldYear() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
         buyByCard.errorValueByFieldYearBuyByCard();
     }
 
-    @Test //9
+    @Test
     void shouldErrorByEmptyFieldMonth() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
@@ -118,14 +118,14 @@ public class BuyByCardTest {
 
     }
 
-    @Test //10
+    @Test
     void shouldErrorByFieldMonth() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();
         buyByCard.errorValueByFieldMonthBuyByCard();
     }
 
-    @Test //11
+    @Test
     void shouldErrorByEmptyFieldCvvCvv() {
         val generalPage = new GeneralPage();
         val buyByCard = generalPage.buyByCard();

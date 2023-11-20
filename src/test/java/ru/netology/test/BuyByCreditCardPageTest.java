@@ -7,7 +7,6 @@ import ru.netology.page.BuyByCreditPage;
 import ru.netology.page.GeneralPage;
 import ru.netology.sql.DbMethods;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -24,7 +23,7 @@ public class BuyByCreditCardPageTest {
         Configuration.browser = "firefox";
         Configuration.browserSize = "1440x900";
 
-        try(InputStream fis = BuyByCreditCardPageTest.class.getResourceAsStream("/application.properties"))
+        try(InputStream fis = BuyByCreditCardPageTest.class.getResourceAsStream("/db.properties"))
         {
             Properties properties = new Properties();
             properties.load(fis);
@@ -40,7 +39,7 @@ public class BuyByCreditCardPageTest {
         open("http://localhost:8080");
     }
 
-    @Test //1
+    @Test
     @DisplayName("Проверка кредитной карты")
     void shouldBuyByCreditCard() {
         int numRows = getResultSetRowCountForCredit();
@@ -52,7 +51,7 @@ public class BuyByCreditCardPageTest {
         Assertions.assertEquals(numRows + 1, getResultSetRowCountForCredit());
     }
 
-    @Test //2
+    @Test
     void shouldCanceled() {
         int numRows = getResultSetRowCountForCredit();
         GeneralPage generalPage = new GeneralPage();
@@ -63,14 +62,14 @@ public class BuyByCreditCardPageTest {
         Assertions.assertEquals(numRows + 1, getResultSetRowCountForCredit());
     }
 
-    @Test //3
+    @Test
     void shouldErrorByFieldNumberOfCard() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
         buyByCreditPage.errorByFieldCardNumberBuyByCredit();
     }
 
-    @Test //4
+    @Test
     void shouldErrorByEmptyFieldNumberOfCard() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
@@ -79,14 +78,14 @@ public class BuyByCreditCardPageTest {
     }
 
 
-    @Test //5
+    @Test
     void shouldErrorByEmptyFieldOwner() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
         buyByCreditPage.errorByEmptyFieldOwnerBuyByCredit("00");
     }
 
-    @Test //6
+    @Test
     void shouldCheckByEmptyFieldOwner() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
@@ -94,7 +93,7 @@ public class BuyByCreditCardPageTest {
         BuyByCreditPage.isAlert("Владелец", "Поле обязательно для заполнения");
     }
 
-    @Test //7
+    @Test
     void shouldErrorByEmptyFieldYear() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
@@ -102,14 +101,14 @@ public class BuyByCreditCardPageTest {
         assertTrue(BuyByCreditPage.isAlert("Год", "Неверный формат"));
     }
 
-    @Test //8
+    @Test
     void shouldErrorByIncorrectValueFieldYear() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
         buyByCreditPage.errorValueByFieldYearBuyByCredit();
     }
 
-    @Test //9
+    @Test
     void shouldErrorByEmptyFieldMonth() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
@@ -118,14 +117,14 @@ public class BuyByCreditCardPageTest {
 
     }
 
-    @Test //10
+    @Test
     void shouldErrorByFieldMonth() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
         buyByCreditPage.errorValueByFieldMonthBuyByCredit();
     }
 
-    @Test //11
+    @Test
     void shouldErrorByEmptyFieldCvvCvv() {
         GeneralPage generalPage = new GeneralPage();
         BuyByCreditPage buyByCreditPage = generalPage.buyByCredit();
