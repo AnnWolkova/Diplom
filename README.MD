@@ -23,4 +23,4 @@ java -jar ./aqa-shop.jar -P:jdbc.url=jdbc:mysql://localhost:5432/app -P:jdbc.use
 
 вариант 1 (с подключением к MySQL) gradle test
 
-5. Оценить результат прогонки тестовых сцекнариев по ссылке: file:///C:/Users/a.volkova/Desktop/Diplom/Diplom/build/reports/tests/test/index.html
+5. Оценить результат прогонки тестовых сцекнариев по ссылке в папке build проектf:.../Diplom/build/reports/tests/test/index.html
