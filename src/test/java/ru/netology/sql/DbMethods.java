@@ -1,7 +1,8 @@
 package ru.netology.sql;
 
 import lombok.Value;
-import lombok.val;
+import lombok.SneakyThrows;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
@@ -16,87 +17,60 @@ public class DbMethods {
         String status;
     }
 
-    public static StatusInfo getStatusForCredit() {
+    @SneakyThrows
+    public static Connection getConnection()
+    {
         String dbUrl = System.getProperty("database.url");
         String dbUser = System.getProperty("database.name");
         String dbPassword = System.getProperty("database.password");
-
-        val getCode = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
-        val runner = new QueryRunner();
-
-        try (
-                val conn = DriverManager.getConnection(
-                        dbUrl, dbUser, dbPassword)
-        ) {
-            val status = runner.query(conn, getCode, new ScalarHandler<>());
-            return new StatusInfo(status.toString());
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
+    @SneakyThrows
+    public static StatusInfo getStatusForCredit() {
+        Connection conn = getConnection();
+
+        var getCode = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
+        var runner = new QueryRunner();
+
+        var status = runner.query(conn, getCode, new ScalarHandler<>());
+        return new StatusInfo(status.toString());
+    }
+
+    @SneakyThrows
     public static StatusInfo getStatusForCard() {
 
-        String dbUrl = System.getProperty("database.url");
-        String dbUser = System.getProperty("database.name");
-        String dbPassword = System.getProperty("database.password");
+        Connection conn = getConnection();
 
-        val getCode = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
-        val runner = new QueryRunner();
+        var getCode = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
+        var runner = new QueryRunner();
 
-        try (
-                val conn = DriverManager.getConnection(
-                        dbUrl, dbUser, dbPassword)
-        ) {
-            val status = runner.query(conn, getCode, new ScalarHandler<>());
-            return new StatusInfo(status.toString());
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
+        var status = runner.query(conn, getCode, new ScalarHandler<>());
+        return new StatusInfo(status.toString());
     }
 
 
+    @SneakyThrows
     public static int getResultSetRowCountForCredit() {
 
-        String dbUrl = System.getProperty("database.url");
-        String dbUser = System.getProperty("database.name");
-        String dbPassword = System.getProperty("database.password");
-
-        val getRows = "select * from credit_request_entity";
-        try (
-                val conn = DriverManager.getConnection(
-                        dbUrl, dbUser, dbPassword)
-        ) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(getRows);
-            rs.last();
-            return rs.getRow();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return 0;
+        Connection conn = getConnection();
+        return countForTable(conn, "credit_request_entity");
     }
 
-    public static int getResultSetRowCountForCard() {
-        String dbUrl = System.getProperty("database.url");
-        String dbUser = System.getProperty("database.name");
-        String dbPassword = System.getProperty("database.password");
+    @SneakyThrows
+    public static int getResultSetRowCountForCard()  {
+        Connection conn = getConnection();
+        return countForTable(conn, "payment_entity");
+    }
 
-        val getRows = "select * from payment_entity";
-        try (
-                val conn = DriverManager.getConnection(
-                        dbUrl, dbUser, dbPassword)
-        ) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(getRows);
-            rs.last();
-            return rs.getRow();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return 0;
+    private static int countForTable(Connection conn, String tableName) throws SQLException {
+        var getRows = "select count(*) C from " + tableName;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(getRows);
+        if(rs.next())
+            return rs.getInt("C");
+
+        throw new IllegalStateException();
     }
 
 }

@@ -1,3 +1,6 @@
 # Project exclude paths
 /.gradle/
 /gate-simulator/node_modules/
+/.idea/
+/build/
+

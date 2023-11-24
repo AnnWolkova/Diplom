@@ -2,13 +2,22 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Configuration;
 //import lombok.val;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import lombok.SneakyThrows;
+import org.apache.commons.dbutils.DbUtils;
 import org.junit.jupiter.api.*;
+import org.testng.annotations.DataProvider;
 import ru.netology.page.BuyByCreditPage;
 import ru.netology.page.GeneralPage;
 import ru.netology.sql.DbMethods;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -32,12 +41,18 @@ public class BuyByCreditCardPageTest {
                 System.setProperty((String) key, value);
             }
         }
+        SelenideLogger.addListener("allure", new AllureSelenide());
     }
-
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
     @BeforeEach
     void openSetUp() {
         open("http://localhost:8080");
     }
+
+
 
     @Test
     @DisplayName("Проверка кредитной карты")
@@ -132,5 +147,34 @@ public class BuyByCreditCardPageTest {
         assertTrue(BuyByCreditPage.isAlert("CVC/CVV", "Неверный формат"));
     }
 
+    @Test
+    @SneakyThrows
+    void printTableCredit() {
+        printTableValues("credit_request_entity");
+    }
+
+    @SneakyThrows
+    void printTableValues(String table) {
+        Connection conn = DbMethods.getConnection();
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery("select * from " + table);
+        ResultSetMetaData md = rs.getMetaData();
+        for(int i=0; i<md.getColumnCount(); i++)
+        {
+            System.out.print(md.getColumnName(i+1) + " ");
+        }
+        System.out.println();
+
+
+        while(rs.next())
+        {
+            for(int i=0; i<md.getColumnCount(); i++)
+            {
+                String val = rs.getString(i + 1);
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
+    }
 
 }

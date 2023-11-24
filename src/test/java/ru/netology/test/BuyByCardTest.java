@@ -1,11 +1,10 @@
 package ru.netology.test;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.page.BuyByCreditPage;
 import ru.netology.page.GeneralPage;
 import ru.netology.sql.DbMethods;
@@ -34,6 +33,11 @@ public class BuyByCardTest {
                 System.setProperty((String) key, value);
             }
         }
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 
     @BeforeEach

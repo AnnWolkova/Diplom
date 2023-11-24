@@ -1,25 +1,29 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Locale;
+import java.time.LocalDate;
+import java.util.*;
 
 
 public class DataHelper {
     private DataHelper() {
     }
 
+    @NotNull
+    public static String getCardNumberApproved() {
+        return "4444 4444 4444 4441";
+    }
 
-    @org.jetbrains.annotations.NotNull
-    public static String getCardNumber(String enterLastForDigitsOfCard) {
-        if (enterLastForDigitsOfCard.equals("4441"))
-            return "4444 4444 4444 4441";
-        if (enterLastForDigitsOfCard.equals("4442"))
-            return "4444 4444 4444 4442";
-        else return "0000 0000 0000 000";
+    @NotNull
+    public static String getCardNumberDeclined() {
+        return "4444 4444 4444 4442";
+    }
+
+    @NotNull
+    public static String getCardNumberFail() {
+        return "0000 0000 0000 000";
     }
 
     public static String generateValidMonthCardExpired() {
@@ -36,24 +40,26 @@ public class DataHelper {
         return months.get(1);
     }
 
-    public static String enterMonthExpiredCardManually(String enterCardExpired) {
-        return enterCardExpired;
-    }
-
     public static String generateValidYearCardExpired() {
-        ArrayList<String> years = new ArrayList<>(Arrays.asList("21", "22", "23"));
+        int year = LocalDate.now().getYear()%100;
+        LinkedList<String> years = new LinkedList<>(Arrays.asList(
+                String.valueOf(year),
+                String.valueOf(year+1),
+                String.valueOf(year+2)
+        ));
         Collections.shuffle(years);
-        return years.get(1);
-    }
-
-    public static String enterYearExpiredCardManually(String enterYearExpired) {
-        return enterYearExpired;
+        return years.getFirst();
     }
 
     public static String generateNotValidYearCardExpired() {
-        ArrayList<String> years = new ArrayList<>(Arrays.asList("19", "20", "00", "99"));
+        int year = LocalDate.now().getYear()%100;
+        LinkedList<String> years = new LinkedList<>(Arrays.asList(
+                String.valueOf(year-1),
+                String.valueOf(year-2),
+                String.valueOf(year-3)
+        ));
         Collections.shuffle(years);
-        return years.get(1);
+        return years.getFirst();
     }
 
     public static String generateOwnerName() {

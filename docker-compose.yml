@@ -11,11 +11,12 @@ services:
       - MYSQL_DATABASE=app
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
-#  node-app:
-#    build: ./gate-simulator
-#    image: node-app
-#    ports:
-#      - '9999:9999'
+
+  node-app:
+    build: ./gate-simulator
+    image: node-app
+    ports:
+      - '9999:9999'
   postgres:
     image: postgres:12-alpine
     ports:
