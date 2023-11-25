@@ -22,15 +22,17 @@ public class DataHelper {
     }
 
     @NotNull
+    public static String getCardNumberDeclined2() {
+        return "4444 4444 4444 4443";
+    }
+
+    @NotNull
     public static String getCardNumberFail() {
         return "0000 0000 0000 000";
     }
 
     public static String generateValidMonthCardExpired() {
-        ArrayList<String> months = new ArrayList<>(Arrays.
-                asList("04", "05", "06", "07", "08", "09", "10", "11", "12"));
-        Collections.shuffle(months);
-        return months.get(1);
+        return "12";
     }
 
     public static String generateInvalidMonthCardExpired() {

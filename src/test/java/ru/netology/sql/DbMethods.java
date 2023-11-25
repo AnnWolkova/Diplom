@@ -27,40 +27,43 @@ public class DbMethods {
     }
 
     @SneakyThrows
-    public static StatusInfo getStatusForCredit() {
+    public static String getStatusForCredit() {
         Connection conn = getConnection();
 
         var getCode = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
         var runner = new QueryRunner();
-
-        var status = runner.query(conn, getCode, new ScalarHandler<>());
-        return new StatusInfo(status.toString());
+        return runner.query(conn, getCode, new ScalarHandler<>());
     }
 
     @SneakyThrows
-    public static StatusInfo getStatusForCard() {
+    public static String getStatusForCard() {
 
         Connection conn = getConnection();
 
         var getCode = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
         var runner = new QueryRunner();
 
-        var status = runner.query(conn, getCode, new ScalarHandler<>());
-        return new StatusInfo(status.toString());
+        return runner.query(conn, getCode, new ScalarHandler<>());
     }
 
 
-    @SneakyThrows
-    public static int getResultSetRowCountForCredit() {
+//    @SneakyThrows
+//    public static int getResultSetRowCountForCredit() {
+//
+//        Connection conn = getConnection();
+//        return countForTable(conn, "credit_request_entity");
+//    }
+//
+//    @SneakyThrows
+//    public static int getResultSetRowCountForCard()  {
+//        Connection conn = getConnection();
+//        return countForTable(conn, "payment_entity");
+//    }
 
-        Connection conn = getConnection();
-        return countForTable(conn, "credit_request_entity");
-    }
-
     @SneakyThrows
-    public static int getResultSetRowCountForCard()  {
+    public static int getResultSetRowCount(String tableName) {
         Connection conn = getConnection();
-        return countForTable(conn, "payment_entity");
+        return countForTable(conn, tableName);
     }
 
     private static int countForTable(Connection conn, String tableName) throws SQLException {
