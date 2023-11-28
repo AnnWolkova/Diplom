@@ -8,17 +8,17 @@
 
 2. Затем поочредно (выбираю один вариант SUT + прогонка тестов):
 вариант 1 (с подключением к MySQL) :
-   java -jar ./aqa-shop.jar "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app"
+   -java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
 
 вариант 2 (с подключением к PostgreSQL
 Здесь стоит отменить что перед началом запуска прогонки тестов
-на постгрес, необходимо раскомментировать ту часть файла  application.property, которая  относится к данной базе) :
-
-java -jar ./aqa-shop.jar "-Dspring.datasource.url=jdbc:postges://localhost:5432/app"
+на постгрес, 
+-java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
 
 
 3. После того как приложение запустится, в следующей соседней вкладке терминала запустить тесты командой:
 
 gradle test
+
 
 4. Дальше формируем отчёт allure командой: allureServe и оценить результат прогонки тестовых сценариев по отчёту.

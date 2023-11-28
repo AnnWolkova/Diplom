@@ -46,20 +46,6 @@ public class DbMethods {
         return runner.query(conn, getCode, new ScalarHandler<>());
     }
 
-
-//    @SneakyThrows
-//    public static int getResultSetRowCountForCredit() {
-//
-//        Connection conn = getConnection();
-//        return countForTable(conn, "credit_request_entity");
-//    }
-//
-//    @SneakyThrows
-//    public static int getResultSetRowCountForCard()  {
-//        Connection conn = getConnection();
-//        return countForTable(conn, "payment_entity");
-//    }
-
     @SneakyThrows
     public static int getResultSetRowCount(String tableName) {
         Connection conn = getConnection();

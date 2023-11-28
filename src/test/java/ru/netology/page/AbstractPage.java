@@ -2,7 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.ex.TimeoutException;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import ru.netology.data.DataHelper;
 
@@ -31,120 +31,132 @@ public abstract class AbstractPage {
     }
 
     public void successfullyBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void canceledBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberDeclined());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberDeclined(),
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void errorByFieldCardNumberBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberFail());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberFail(),
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC());
         buttonContinue.click();
     }
 
     public void errorByEmptyFieldCardNumberBuyByCredit() {
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                null,
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void byEmptyFieldMonthBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateValidYearCardExpired(),
+                null,
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void errorValueByFieldMonthBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateInvalidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateInvalidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void emptyFieldYearBuyByCredit(String yearExpired) {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(yearExpired);
-        monthCardExpired.setValue(DataHelper.generateInvalidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                yearExpired,
+                DataHelper.generateInvalidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void errorValueByFieldYearBuyByCredit() {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateNotValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateNotValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void errorByEmptyFieldOwnerBuyByCredit(String ownerName) {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateValidMonthCardExpired());
-        ownerCard.setValue(ownerName);
-        cvcCvvCard.setValue(DataHelper.generateCVC());
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateValidYearCardExpired(),
+                DataHelper.generateValidMonthCardExpired(),
+                ownerName,
+                DataHelper.generateCVC()
+        );
         buttonContinue.click();
     }
 
     public void errorByEmptyFieldCvcCvvBuyByCredit(String cvcCvv) {
-        cardNumber.setValue(DataHelper.getCardNumberApproved());
-        yearCardExpired.setValue(DataHelper.generateNotValidYearCardExpired());
-        monthCardExpired.setValue(DataHelper.generateInvalidMonthCardExpired());
-        ownerCard.setValue(DataHelper.generateOwnerName());
-        cvcCvvCard.setValue(cvcCvv);
+        setData(
+                DataHelper.getCardNumberApproved(),
+                DataHelper.generateNotValidYearCardExpired(),
+                DataHelper.generateInvalidMonthCardExpired(),
+                DataHelper.generateOwnerName(),
+                cvcCvv
+        );
         buttonContinue.click();
     }
 
-    public void assertBankMessage(String expectedMessage, String errorMessage) {
-        try {
-            $(By.xpath("//div[text()='" + expectedMessage + "']")).shouldBe(Condition.visible, Duration.ofSeconds(30));
-        } catch (Exception e) {
-            throw new AssertionError(errorMessage, e);
-        }
+    private void setData(@NotNull String cardNumber, String year, String month, String ownerName, String cvcCvv) {
+        if(cardNumber!=null) this.cardNumber.setValue(cardNumber);
+        if(year!=null) yearCardExpired.setValue(year);
+        if(month!=null) monthCardExpired.setValue(month);
+        if(ownerName!=null) ownerCard.setValue(ownerName);
+        if(cvcCvv!=null) cvcCvvCard.setValue(cvcCvv);
     }
 
-    public boolean isAlert(String fieldName, String errorText) {
-        try {
-            $(By.xpath("//span[text() = '" + fieldName + "']//following::span[text() = '" + errorText + "']"))
-                    .shouldBe(Condition.visible, Duration.ofSeconds(30));
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+    public void assertBankMessage(String expectedMessage, String errorMessage) {
+        $(By.xpath("//div[text()='" + expectedMessage + "']")).shouldBe(Condition.visible, Duration.ofSeconds(30));
+    }
+
+    public void assertAlert(String fieldName, String errorText) {
+        $(By.xpath("//span[text() = '" + fieldName + "']//following::span[text() = '" + errorText + "']"))
+                .shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
     public void assertAlertMessage(String fieldName, String expectedErrorMessage) {
-        String message = "У поля '" + fieldName + "' должна появиться подпись '" + expectedErrorMessage + "'";
-        boolean alert;
-        try {
-            alert = isAlert(fieldName, expectedErrorMessage);
-        } catch (Throwable e) {
-            throw new AssertionError(message, e);
-        }
-
-        assertTrue(alert, message);
+        assertAlert(fieldName, expectedErrorMessage);
     }
 }

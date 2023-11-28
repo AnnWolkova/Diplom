@@ -23,48 +23,28 @@ repositories {
 }
 
 dependencies {
-
-
     testImplementation 'io.qameta.allure:allure-junit5:2.12.1'
-    //testImplementation 'io.qameta.allure:allure-commandLine:2.12.1'
     testImplementation 'io.qameta.allure:allure-assertj:2.12.1'
-   // testImplementation 'io.qameta.allure:allure-rest-assured:2.12.1'
     testImplementation 'io.qameta.allure:allure-junit5:2.12.1'
     testImplementation 'io.qameta.allure:allure-java-commons:2.12.1'
-    //runtimeOnly 'org.aspectj:aspectjweaver:1.9.6'
     testImplementation 'org.aspectj:aspectjweaver:1.9.6'
-
-
-
-
     implementation 'org.projectlombok:lombok:1.18.26', 'org.jetbrains:annotations:24.0.1'
-    testImplementation 'org.testng:testng:7.7.0'
-//    compileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.9.2',
             'io.qameta.allure:allure-selenide:2.21.0', 'mysql:mysql-connector-java:8.0.33',
             'commons-dbutils:commons-dbutils:1.7')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-//    annotationProcessor 'org.projectlombok:lombok:1.18.26'
-//
     testImplementation 'com.codeborne:selenide:6.12.3'
-//    testCompileOnly 'org.projectlombok:lombok:1.18.26'
-//    implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'com.github.javafaker:javafaker:1.0.2'
-//    testImplementation 'org.postgresql:postgresql:42.6.0'
-//    testImplementation 'mysql:mysql-connector-java:8.0.33'
 
 
 }
 
 test {
     useJUnitPlatform()
-    systemProperty 'datasource.url', System.getProperty('datasource.url', 'jdbc:mysql://localhost:3306/app')
-    systemProperty 'datasource.url2', System.getProperty('datasource.url2', 'jdbc:postgresql://localhost:5432/app')
-    systemProperty 'database.url', System.getProperty('database.url')
-    systemProperty 'database.name', System.getProperty('database.name')
-    systemProperty 'database.password', System.getProperty('database.password')
-    systemProperty 'sut.url', System.getProperty('sut.url', 'http://localhost:8080')
-    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-    systemProperty 'webdriver.gecko.driver', "C:\\Users\\a.volkova\\Downloads\\geckodriver-v0.33.0-win64\\geckodriver.exe"
-}
+    systemProperty 'database.url', System.getProperty('database.url', 'jdbc:mysql://localhost:3306/app')
+    systemProperty 'database.name', System.getProperty('database.name', 'app')
+    systemProperty 'database.password', System.getProperty('database.password', 'pass')
+    systemProperty 'app.url', System.getProperty('app.url', 'http://localhost:8080')
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless', 'true')
+    }
