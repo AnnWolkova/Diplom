@@ -8,12 +8,14 @@
 
 2. Затем поочредно (выбираю один вариант SUT + прогонка тестов):
 вариант 1 (с подключением к MySQL) :
-   -java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
+   
+java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
 
 вариант 2 (с подключением к PostgreSQL
 Здесь стоит отменить что перед началом запуска прогонки тестов
 на постгрес, 
--java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
+
+java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar aqa-shop.jar
 
 
 3. После того как приложение запустится, в следующей соседней вкладке терминала запустить тесты командой:
